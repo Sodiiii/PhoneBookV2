@@ -6,13 +6,7 @@ const AddPhone = () => {
   const [selectValue, setSelectValue] = useState("7");
   const [title, setTitle] = useState("");
   const [phoneList, setPhonelist] = useState([]);
-  
-  React.useEffect(() => {
-    Axios.get("http://localhost:3001/phones").then((response) => {
-      console.log(response);
-      setPhonelist(response.data);
-    });
-  }, []);
+
 
   function selectVal(e) {
     setSelectValue(e.target.value);
@@ -32,6 +26,12 @@ const AddPhone = () => {
     setTitle("");
     console.log(phone);
   };
+
+  setInterval((e) => {
+    Axios.get("http://localhost:3001/phones").then((response) => {
+      setPhonelist(response.data);
+    });
+  }, 3000);
 
   const flag = () => {
     let flag;
@@ -74,14 +74,13 @@ const AddPhone = () => {
         <button>Add number</button>
       </div>
 
-      <div className='phone_list'>
-          <h3 className='base'>Номера в базе:</h3>
-          {phoneList.map((val, key) => {
-            return <div key = {val.id}>{val.phone}</div>
-          })}
-        </div>
+      <div className="phone_list">
+        <h3 className="base">Номера в базе:</h3>
+        {phoneList.map((val, key) => {
+          return <div key={val.id}>{val.phone}</div>;
+        })}
+      </div>
     </form>
-    
   );
 };
 
